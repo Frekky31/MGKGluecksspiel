@@ -431,7 +431,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- Simple ListBoxItem - This is used for each Item in a ListBox. The item's content is placed in the ContentPresenter -->
     
     <Style x:Key="SimpleListBoxItem" d:IsControlPart="True" TargetType="{x:Type ListBoxItem}">

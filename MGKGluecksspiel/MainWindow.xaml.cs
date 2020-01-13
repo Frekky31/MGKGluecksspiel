@@ -40,10 +40,15 @@ namespace MGKGluecksspiel
             return double.TryParse(str, out double i) && i >= min && i <= max;
         }
 
+        public static bool IsValidInt(string str, int min, int max)
+        {
+            return int.TryParse(str, out int i) && i >= min && i <= max;
+        }
+
         #region
         private void NbrShowRange_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !IsValidDouble(((TextBox)sender).Text + e.Text, 1, 9999);
+            e.Handled = !IsValidInt(((TextBox)sender).Text + e.Text, 0, 9999);
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -59,6 +64,10 @@ namespace MGKGluecksspiel
 
         private void BtnInsert_Click(object sender, RoutedEventArgs e)
         {
+            Insert();
+        }
+
+        private void Insert() {
             if (!string.IsNullOrWhiteSpace(txtName.Text) && !string.IsNullOrWhiteSpace(txtNumber.Text) && double.TryParse(txtNumber.Text, out double number))
             {
                 viewmodel.Inputs.Add(new InputViewmodel(txtName.Text, number));
@@ -102,6 +111,11 @@ namespace MGKGluecksspiel
 
         private void MniDelete_Click(object sender, RoutedEventArgs e)
         {
+            DeleteSelected();
+        }
+
+        private void DeleteSelected()
+        {
             try
             {
                 List<InputViewmodel> list = lstInputs.SelectedItems.Cast<InputViewmodel>().ToList();
@@ -130,12 +144,24 @@ namespace MGKGluecksspiel
 
         private void MniExport_Click(object sender, RoutedEventArgs e)
         {
+            ExportToExcel();
+        }
+        private void mniExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            ExportToExcel();
+        }
+
+        private void ExportToExcel()
+        {
             try
             {
-                var excel = new Microsoft.Office.Interop.Excel.Application();
+                var excel = new Microsoft.Office.Interop.Excel.Application(); 
+                excel.Visible = false;
+                excel.DisplayAlerts = false;
                 var workbook = excel.Workbooks.Add(Type.Missing);
                 var worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.ActiveSheet;
-                worksheet.Name = "Auswertung";
+                DateTime dateTime = DateTime.Today;
+                worksheet.Name = $"Jahreskonzert_{dateTime.ToString("yyyyMMdd")}";
 
                 worksheet.Cells[1, 1] = "Platz";
                 worksheet.Cells[1, 2] = "Name";
@@ -153,10 +179,12 @@ namespace MGKGluecksspiel
                     rowcount += 1;
                 }
 
-                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-                dlg.FileName = "Auswertung"; // Default file name
-                dlg.DefaultExt = ".xlsx"; // Default file extension
-                dlg.Filter = "Excel documents (.xlsx)|*.xlsx"; // Filter files by extension
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+                {
+                    FileName = $"Jahreskonzert_{dateTime.ToString("yyyyMMdd")}", // Default file name
+                    DefaultExt = ".xlsx", // Default file extension
+                    Filter = "Excel Dokument (.xlsx)|*.xlsx" // Filter files by extension
+                };
 
                 bool? result = dlg.ShowDialog();
 
@@ -174,16 +202,22 @@ namespace MGKGluecksspiel
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void MniSave_Click(object sender, RoutedEventArgs e)
         {
+            Save();
+        }
 
+        private void Save()
+        {
             try
             {
-                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-                dlg.FileName = ""; // Default file name
-                dlg.DefaultExt = ".dat"; // Default file extension
-                dlg.Filter = "File documents (.dat)|*.dat"; // Filter files by extension
+                DateTime dateTime = DateTime.Today;
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+                {
+                    FileName = $"Jahreskonzert_{dateTime.ToString("yyyyMMdd")}", // Default file name
+                    DefaultExt = ".dat", // Default file extension
+                    Filter = "Datei Dokument (.dat)|*.dat" // Filter files by extension
+                };
 
                 bool? result = dlg.ShowDialog();
 
@@ -206,12 +240,17 @@ namespace MGKGluecksspiel
 
         private void MniOpen_Click(object sender, RoutedEventArgs e)
         {
+            Open();
+        }
+
+        private void Open()
+        {
             try
             {
                 Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
                 dlg.FileName = ""; // Default file name
                 dlg.DefaultExt = ".dat"; // Default file extension
-                dlg.Filter = "File documents (.dat)|*.dat"; // Filter files by extension
+                dlg.Filter = "Datei Dokument (.dat)|*.dat"; // Filter files by extension
 
                 bool? result = dlg.ShowDialog();
 
@@ -233,16 +272,24 @@ namespace MGKGluecksspiel
             }
         }
 
-        private SaveObject ToSaveOject() {
+        private SaveObject ToSaveOject()
+        {
             SaveObject saveObject = new SaveObject();
             try
             {
                 saveObject.Only = int.Parse(txtShowRange.Text);
+            }
+            catch (Exception)
+            {
+                saveObject.Only = 1;
+            }
+            try
+            {
                 saveObject.GuessNumber = double.Parse(txtGuessNumber.Text);
             }
             catch (Exception)
             {
-
+                saveObject.GuessNumber = 0;
             }
             foreach (var input in viewmodel.Inputs)
                 saveObject.Inputs.Add(new Input(input.Name, input.Number));
@@ -252,13 +299,41 @@ namespace MGKGluecksspiel
             return saveObject;
         }
 
-        private void FromSaveObject(SaveObject saveObject) {
+        private void FromSaveObject(SaveObject saveObject)
+        {
             viewmodel.Inputs.Clear();
             viewmodel.Outputs.Clear();
+
+            txtGuessNumber.Text = saveObject.GuessNumber.ToString();
+            txtShowRange.Text = saveObject.Only.ToString();
+
             foreach (var input in saveObject.Inputs)
                 viewmodel.Inputs.Add(new InputViewmodel(input.Name, input.Number));
             foreach (var output in saveObject.Outputs)
                 viewmodel.Outputs.Add(new OutputViewmodel(output.Place, output.Name, output.Number, output.Difference));
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.S && Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                Save();
+            }
+            else if (e.Key == Key.O && Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                Open();
+            }
+            else if (e.Key == Key.Delete)
+            {
+                DeleteSelected();
+            }
+        }
+
+        private void txtNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) {
+                Insert();
+            }
         }
     }
 }
