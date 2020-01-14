@@ -10,9 +10,9 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="#FF191919">
                 <MenuItem Header="Datei" Foreground="White" IsTabStop="False">
-                    <MenuItem Name="mniSave" Header="Speichern" Click="MniSave_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" />
-                    <MenuItem Name="mniOpen" Header="Öffnen" Click="MniOpen_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" />
-                    <MenuItem Name="mniExportExcel" Header="Exportieren nach Excel" Click="mniExportExcel_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" />
+                    <MenuItem x:Name="mniSave" Header="Speichern" Click="MniSave_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" IsTabStop="False" />
+                    <MenuItem x:Name="mniOpen" Header="Öffnen" Click="MniOpen_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" IsTabStop="False" />
+                    <MenuItem x:Name="mniExportExcel" Header="Exportieren nach Excel" Click="mniExportExcel_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" IsTabStop="False" />
                 </MenuItem>
             </Menu>
         </DockPanel>

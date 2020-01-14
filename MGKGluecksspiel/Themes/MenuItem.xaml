@@ -76,6 +76,7 @@
     <Style x:Key="MenuScrollViewer"
        TargetType="{x:Type ScrollViewer}"
        BasedOn="{x:Null}">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="HorizontalScrollBarVisibility"
           Value="Hidden" />
         <Setter Property="VerticalScrollBarVisibility"
@@ -530,6 +531,7 @@
     <!-- MenuItem Style -->
     <Style x:Key="{x:Type MenuItem}"
        TargetType="{x:Type MenuItem}">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="OverridesDefaultStyle"
           Value="True" />
         <Style.Triggers>
@@ -558,9 +560,41 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="{x:Type ContextMenu}"
-       TargetType="{x:Type ContextMenu}">
-        <Setter Property="Background" Value="#000" />
-        <Setter Property="Foreground" Value="#FFF" />
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="SnapsToDevicePixels"
+          Value="True" />
+        <Setter Property="OverridesDefaultStyle"
+          Value="True" />
+        <Setter Property="Grid.IsSharedSizeScope"
+          Value="true" />
+        <Setter Property="HasDropShadow"
+          Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border x:Name="Border"
+                Background="{StaticResource MenuPopupBrush}"
+                BorderThickness="1">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{StaticResource BorderMediumColorMenu}" />
+                        </Border.BorderBrush>
+                        <StackPanel IsItemsHost="True"
+                      KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow"
+                   Value="true">
+                            <Setter TargetName="Border"
+                    Property="Padding"
+                    Value="0,3,0,3" />
+                            <Setter TargetName="Border"
+                    Property="CornerRadius"
+                    Value="4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
