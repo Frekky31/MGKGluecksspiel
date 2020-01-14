@@ -8,7 +8,7 @@
         Title="Glücksspiel" Height="818" Width="650" Background="#FF191717" Foreground="#FFE4E4E4" KeyDown="Window_KeyDown">
     <Grid>
         <DockPanel>
-            <Menu DockPanel.Dock="Top" Background="{x:Null}" Foreground="#FFF1F1F1">
+            <Menu DockPanel.Dock="Top" Background="#FF191919">
                 <MenuItem Header="Datei" Foreground="White">
                     <MenuItem Name="mniSave" Header="Speichern" Click="MniSave_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" />
                     <MenuItem Name="mniOpen" Header="Öffnen" Click="MniOpen_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" />

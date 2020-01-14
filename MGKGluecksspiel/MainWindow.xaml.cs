@@ -67,7 +67,8 @@ namespace MGKGluecksspiel
             Insert();
         }
 
-        private void Insert() {
+        private void Insert()
+        {
             if (!string.IsNullOrWhiteSpace(txtName.Text) && !string.IsNullOrWhiteSpace(txtNumber.Text) && double.TryParse(txtNumber.Text, out double number))
             {
                 viewmodel.Inputs.Add(new InputViewmodel(txtName.Text, number));
@@ -155,7 +156,7 @@ namespace MGKGluecksspiel
         {
             try
             {
-                var excel = new Microsoft.Office.Interop.Excel.Application(); 
+                var excel = new Microsoft.Office.Interop.Excel.Application();
                 excel.Visible = false;
                 excel.DisplayAlerts = false;
                 var workbook = excel.Workbooks.Add(Type.Missing);
@@ -275,22 +276,12 @@ namespace MGKGluecksspiel
         private SaveObject ToSaveOject()
         {
             SaveObject saveObject = new SaveObject();
-            try
-            {
-                saveObject.Only = int.Parse(txtShowRange.Text);
-            }
-            catch (Exception)
-            {
-                saveObject.Only = 1;
-            }
-            try
-            {
-                saveObject.GuessNumber = double.Parse(txtGuessNumber.Text);
-            }
-            catch (Exception)
-            {
-                saveObject.GuessNumber = 0;
-            }
+            int.TryParse(txtShowRange.Text, out int range);
+            double.TryParse(txtGuessNumber.Text, out double guessNumber);
+
+            saveObject.GuessNumber = guessNumber;
+            saveObject.Only = range;
+
             foreach (var input in viewmodel.Inputs)
                 saveObject.Inputs.Add(new Input(input.Name, input.Number));
             foreach (var output in viewmodel.Outputs)
@@ -331,7 +322,8 @@ namespace MGKGluecksspiel
 
         private void txtNumber_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) {
+            if (e.Key == Key.Enter)
+            {
                 Insert();
             }
         }

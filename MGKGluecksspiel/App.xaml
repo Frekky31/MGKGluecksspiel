@@ -7,7 +7,9 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Simple Styles.xaml"/>
+                <ResourceDictionary Source="Themes/ListViewDark.xaml" />
+                <ResourceDictionary Source="Themes/MenuItem.xaml" />
+                <ResourceDictionary Source="Simple Styles.xaml" />
                 <ResourceDictionary Source="Themes/MetroDark/MetroDark.MSControls.Core.Implicit.xaml" />
                 <ResourceDictionary Source="Themes/MetroDark/MetroDark.MSControls.Toolkit.Implicit.xaml" />
             </ResourceDictionary.MergedDictionaries>
