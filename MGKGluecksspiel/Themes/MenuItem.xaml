@@ -33,7 +33,7 @@
 
     <!--Border colors-->
     <Color x:Key="BorderLightColorMenu">#444</Color>
-    <Color x:Key="BorderMediumColorMenu">#444</Color>
+    <Color x:Key="BorderMediumColorMenu">#222</Color>
     <Color x:Key="BorderDarkColorMenu">#444</Color>
 
     <Color x:Key="PressedBorderLightColorMenu">#ABC</Color>
@@ -556,5 +556,11 @@
               Value="{StaticResource {x:Static MenuItem.SubmenuItemTemplateKey}}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="{x:Type ContextMenu}"
+       TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="#000" />
+        <Setter Property="Foreground" Value="#FFF" />
     </Style>
 </ResourceDictionary>

@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MGKGluecksspiel"
         mc:Ignorable="d"
-        Title="Glücksspiel" Height="818" Width="650" Background="#FF191717" Foreground="#FFE4E4E4" KeyDown="Window_KeyDown">
+        Title="Glücksspiel" Height="818" Width="650" Background="#FF191717" Foreground="#FFE4E4E4" KeyDown="Window_KeyDown" IsTabStop="False">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="#FF191919">
-                <MenuItem Header="Datei" Foreground="White">
+                <MenuItem Header="Datei" Foreground="White" IsTabStop="False">
                     <MenuItem Name="mniSave" Header="Speichern" Click="MniSave_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" />
                     <MenuItem Name="mniOpen" Header="Öffnen" Click="MniOpen_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" />
                     <MenuItem Name="mniExportExcel" Header="Exportieren nach Excel" Click="mniExportExcel_Click" Background="#FF272626" BorderBrush="#FF1D1D1D" Foreground="#FFE2E2E2" />
@@ -18,17 +18,17 @@
         </DockPanel>
         <GroupBox Header="Eingaben" Height="90.713" Margin="10,19,0,0" VerticalAlignment="Top" Foreground="#FFECECEC" BorderBrush="White" HorizontalAlignment="Left" Width="622">
             <Grid Margin="0">
-                <TextBox x:Name="txtName" Margin="10,20.04,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="284" Foreground="WhiteSmoke" Background="#FF2B2B2B" Height="23" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtNumber" Margin="304,20.04,10,0" TextWrapping="Wrap" PreviewTextInput="TxtNumber_PreviewTextInput" Foreground="#FFE6E6E6" Background="#FF2B2B2B" Height="23" VerticalAlignment="Top" KeyDown="txtNumber_KeyDown"/>
+                <TextBox x:Name="txtName" Margin="10,20.04,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="284" Foreground="WhiteSmoke" Background="#FF2B2B2B" Height="23" VerticalAlignment="Top" TabIndex="1"/>
+                <TextBox x:Name="txtNumber" Margin="304,20.04,10,0" TextWrapping="Wrap" PreviewTextInput="TxtNumber_PreviewTextInput" Foreground="#FFE6E6E6" Background="#FF2B2B2B" Height="23" VerticalAlignment="Top" KeyDown="txtNumber_KeyDown" TabIndex="2"/>
                 <Label Content="Name" Foreground="White" HorizontalAlignment="Left" Margin="10,-7.694,0,0" VerticalAlignment="Top" Background="{x:Null}"/>
                 <Label Content="Nummer" Foreground="White" HorizontalAlignment="Left" Margin="305,-7.694,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <RadioButton x:Name="rdoAll" Content="Alle" HorizontalAlignment="Left" Margin="10,149.713,0,0" VerticalAlignment="Top" Foreground="#FFE2E2E2" Background="White" GroupName="show" IsChecked="True" Height="14.96" Width="68"/>
-        <RadioButton x:Name="rdoOnly" Content="Bis:" HorizontalAlignment="Left" Margin="83,149.713,0,0" VerticalAlignment="Top" Foreground="#FFE2E2E2" Background="White" GroupName="show" Height="14.96" Width="54.48"/>
+        <RadioButton x:Name="rdoAll" Content="Alle" HorizontalAlignment="Left" Margin="10,149.713,0,0" VerticalAlignment="Top" Foreground="#FFE2E2E2" Background="White" GroupName="show" IsChecked="True" Height="14.96" Width="68" IsTabStop="False"/>
+        <RadioButton x:Name="rdoOnly" Content="Bis:" HorizontalAlignment="Left" Margin="83,149.713,0,0" VerticalAlignment="Top" Foreground="#FFE2E2E2" Background="White" GroupName="show" Height="14.96" Width="54.48" IsTabStop="False"/>
         <Label x:Name="lblAmount" Content="{Binding Inputs.Count}" Margin="211.48,149.713,0,0" Foreground="White" Height="30.01" VerticalAlignment="Top" HorizontalAlignment="Left" Width="103.52"/>
-        <TextBox x:Name="txtShowRange" HorizontalAlignment="Left" Height="16.96" Margin="142.48,149.713,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="64" PreviewTextInput="NbrShowRange_PreviewTextInput" Background="#FF292929" Foreground="#FFE0E0E0"/>
-        <TextBox x:Name="txtGuessNumber" HorizontalAlignment="Left" Height="23" Margin="325,149.713,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="307" PreviewTextInput="TextBox_PreviewTextInput" Background="#FF292929" Foreground="#FFF1F1F1"/>
+        <TextBox x:Name="txtShowRange" HorizontalAlignment="Left" Height="16.96" Margin="142.48,149.713,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="64" PreviewTextInput="NbrShowRange_PreviewTextInput" Background="#FF292929" Foreground="#FFE0E0E0" IsTabStop="False"/>
+        <TextBox x:Name="txtGuessNumber" HorizontalAlignment="Left" Height="23" Margin="325,149.713,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="307" PreviewTextInput="TextBox_PreviewTextInput" Background="#FF292929" Foreground="#FFF1F1F1" IsTabStop="False"/>
         <ListView x:Name="lstInputs" ItemsSource="{Binding Inputs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,184.723,0,10" Background="#FF212121" BorderBrush="#FF727272" Foreground="#FFF3F3F3" HorizontalAlignment="Left" Width="305">
             <ListView.View>
                 <GridView>
@@ -37,7 +37,7 @@
                 </GridView>
             </ListView.View>
             <ListView.ContextMenu>
-                <ContextMenu>
+                <ContextMenu Background="#FF191919">
                     <MenuItem Name="mniDelete" Header="Selektion Löschen" Click="MniDelete_Click"></MenuItem>
                     <MenuItem Name="mniDeleteAll" Header="Alle Löschen" Click="MniDeleteAll_Click"></MenuItem>
                 </ContextMenu>
@@ -58,7 +58,7 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <Button x:Name="btnInsert" Content="Einfügen" Margin="10,114.713,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="305" Click="BtnInsert_Click" Height="19.96" Foreground="#FFF0F0F0" Background="{x:Null}"/>
-        <Button x:Name="btnEvaluate" Content="Auswerten" Margin="325,114.713,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="307" Click="BtnEvaluate_Click" Height="19.96" Background="{x:Null}" Foreground="#FFF0F0F0"/>
+        <Button x:Name="btnInsert" Content="Einfügen" Margin="10,114.713,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="305" Click="BtnInsert_Click" Height="19.96" Foreground="#FFF0F0F0" Background="{x:Null}" TabIndex="3"/>
+        <Button x:Name="btnEvaluate" Content="Auswerten" Margin="325,114.713,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="307" Click="BtnEvaluate_Click" Height="19.96" Background="{x:Null}" Foreground="#FFF0F0F0" IsTabStop="False"/>
     </Grid>
 </Window>
