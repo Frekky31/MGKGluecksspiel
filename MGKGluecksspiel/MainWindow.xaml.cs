@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -145,41 +146,24 @@ namespace MGKGluecksspiel
 
         private void MniExport_Click(object sender, RoutedEventArgs e)
         {
-            ExportToExcel();
+            ExportThread();
         }
         private void mniExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            ExportToExcel();
+            ExportThread();
+        }
+
+        private void ExportThread() {
+            Thread exportThread = new Thread(ExportToExcel);
+            exportThread.SetApartmentState(ApartmentState.STA);
+            exportThread.Start();
         }
 
         private void ExportToExcel()
         {
             try
             {
-                var excel = new Microsoft.Office.Interop.Excel.Application();
-                excel.Visible = false;
-                excel.DisplayAlerts = false;
-                var workbook = excel.Workbooks.Add(Type.Missing);
-                var worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.ActiveSheet;
                 DateTime dateTime = DateTime.Today;
-                worksheet.Name = $"Jahreskonzert_{dateTime.ToString("yyyyMMdd")}";
-
-                worksheet.Cells[1, 1] = "Platz";
-                worksheet.Cells[1, 2] = "Name";
-                worksheet.Cells[1, 3] = "Nummer";
-                worksheet.Cells[1, 4] = "Differenz";
-
-                int rowcount = 2;
-
-                foreach (OutputViewmodel datarow in viewmodel.Outputs.ToList())
-                {
-                    worksheet.Cells[rowcount, 1] = datarow.Place;
-                    worksheet.Cells[rowcount, 2] = datarow.Name;
-                    worksheet.Cells[rowcount, 3] = datarow.Number;
-                    worksheet.Cells[rowcount, 4] = datarow.Difference;
-                    rowcount += 1;
-                }
-
                 Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
                 {
                     FileName = $"Jahreskonzert_{dateTime.ToString("yyyyMMdd")}", // Default file name
@@ -191,12 +175,39 @@ namespace MGKGluecksspiel
 
                 if (result == true)
                 {
+                    Mouse.OverrideCursor = Cursors.Wait;
                     string filename = dlg.FileName;
-                    workbook.SaveAs(filename);
-                }
 
-                workbook.Close();
-                excel.Quit();
+                    var excel = new Microsoft.Office.Interop.Excel.Application
+                    {
+                        Visible = false,
+                        DisplayAlerts = false
+                    };
+                    var workbook = excel.Workbooks.Add(Type.Missing);
+                    var worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.ActiveSheet;
+                    worksheet.Name = $"Jahreskonzert_{dateTime.ToString("yyyyMMdd")}";
+
+                    worksheet.Cells[1, 1] = "Platz";
+                    worksheet.Cells[1, 2] = "Name";
+                    worksheet.Cells[1, 3] = "Nummer";
+                    worksheet.Cells[1, 4] = "Differenz";
+
+                    int rowcount = 2;
+
+                    foreach (OutputViewmodel datarow in viewmodel.Outputs.ToList())
+                    {
+                        worksheet.Cells[rowcount, 1] = datarow.Place;
+                        worksheet.Cells[rowcount, 2] = datarow.Name;
+                        worksheet.Cells[rowcount, 3] = datarow.Number;
+                        worksheet.Cells[rowcount, 4] = datarow.Difference;
+                        rowcount += 1;
+                    }
+
+                    workbook.SaveAs(filename);
+                    workbook.Close();
+                    excel.Quit();
+                    Mouse.OverrideCursor = Cursors.Arrow;
+                }
             }
             catch (Exception ex)
             {
@@ -325,6 +336,8 @@ namespace MGKGluecksspiel
             if (e.Key == Key.Enter)
             {
                 Insert();
+                txtNumber.Text = "";
+                txtNumber.Focus();
             }
         }
     }

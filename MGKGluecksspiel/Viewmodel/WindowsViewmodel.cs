@@ -17,10 +17,10 @@ namespace MGKGluecksspiel.Viewmodel
         {
             Inputs = new ObservableCollection<InputViewmodel>();
 
-            for (int i = 0; i < 400; i++)
-            {
-                Inputs.Add(new InputViewmodel(GetRandomString(5), GetRandomNumber()));
-            }
+            //for (int i = 0; i < 400; i++)
+            //{
+            //    Inputs.Add(new InputViewmodel(GetRandomString(5), GetRandomNumber()));
+            //}
 
             Outputs = new ObservableCollection<OutputViewmodel>();
         }

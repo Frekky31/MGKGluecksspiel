@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MGKGluecksspiel"
         mc:Ignorable="d"
-        Title="Glücksspiel" Height="818" Width="650" Background="#FF191717" Foreground="#FFE4E4E4" KeyDown="Window_KeyDown" IsTabStop="False">
+        Title="Glücksspiel" Height="818" Width="819" Background="#FF191717" Foreground="#FFE4E4E4" KeyDown="Window_KeyDown" IsTabStop="False">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top" Background="#FF191919">
@@ -16,24 +16,24 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <GroupBox Header="Eingaben" Height="90.713" Margin="10,19,0,0" VerticalAlignment="Top" Foreground="#FFECECEC" BorderBrush="White" HorizontalAlignment="Left" Width="622">
+        <GroupBox Header="Eingaben" Height="90.713" Margin="10,19,0,0" VerticalAlignment="Top" Foreground="#FFECECEC" BorderBrush="White" HorizontalAlignment="Left" Width="791">
             <Grid Margin="0">
-                <TextBox x:Name="txtName" Margin="10,20.04,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="284" Foreground="WhiteSmoke" Background="#FF2B2B2B" Height="23" VerticalAlignment="Top" TabIndex="1"/>
-                <TextBox x:Name="txtNumber" Margin="304,20.04,10,0" TextWrapping="Wrap" PreviewTextInput="TxtNumber_PreviewTextInput" Foreground="#FFE6E6E6" Background="#FF2B2B2B" Height="23" VerticalAlignment="Top" KeyDown="txtNumber_KeyDown" TabIndex="2"/>
+                <TextBox x:Name="txtName" Margin="9,20.04,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="365" Foreground="WhiteSmoke" Background="#FF2B2B2B" Height="23" VerticalAlignment="Top" TabIndex="1"/>
+                <TextBox x:Name="txtNumber" Margin="384,20.04,10,0" TextWrapping="Wrap" PreviewTextInput="TxtNumber_PreviewTextInput" Foreground="#FFE6E6E6" Background="#FF2B2B2B" Height="23" VerticalAlignment="Top" KeyDown="txtNumber_KeyDown" TabIndex="2"/>
                 <Label Content="Name" Foreground="White" HorizontalAlignment="Left" Margin="10,-7.694,0,0" VerticalAlignment="Top" Background="{x:Null}"/>
-                <Label Content="Nummer" Foreground="White" HorizontalAlignment="Left" Margin="305,-7.694,0,0" VerticalAlignment="Top"/>
+                <Label Content="Nummer" Foreground="White" HorizontalAlignment="Left" Margin="389,-7.694,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
         <RadioButton x:Name="rdoAll" Content="Alle" HorizontalAlignment="Left" Margin="10,149.713,0,0" VerticalAlignment="Top" Foreground="#FFE2E2E2" Background="White" GroupName="show" IsChecked="True" Height="14.96" Width="68" IsTabStop="False"/>
         <RadioButton x:Name="rdoOnly" Content="Bis:" HorizontalAlignment="Left" Margin="83,149.713,0,0" VerticalAlignment="Top" Foreground="#FFE2E2E2" Background="White" GroupName="show" Height="14.96" Width="54.48" IsTabStop="False"/>
         <Label x:Name="lblAmount" Content="{Binding Inputs.Count}" Margin="211.48,149.713,0,0" Foreground="White" Height="30.01" VerticalAlignment="Top" HorizontalAlignment="Left" Width="103.52"/>
         <TextBox x:Name="txtShowRange" HorizontalAlignment="Left" Height="16.96" Margin="142.48,149.713,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="64" PreviewTextInput="NbrShowRange_PreviewTextInput" Background="#FF292929" Foreground="#FFE0E0E0" IsTabStop="False"/>
-        <TextBox x:Name="txtGuessNumber" HorizontalAlignment="Left" Height="23" Margin="325,149.713,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="307" PreviewTextInput="TextBox_PreviewTextInput" Background="#FF292929" Foreground="#FFF1F1F1" IsTabStop="False"/>
-        <ListView x:Name="lstInputs" ItemsSource="{Binding Inputs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,184.723,0,10" Background="#FF212121" BorderBrush="#FF727272" Foreground="#FFF3F3F3" HorizontalAlignment="Left" Width="305">
+        <TextBox x:Name="txtGuessNumber" HorizontalAlignment="Left" Height="23" Margin="405,149.713,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="375" PreviewTextInput="TextBox_PreviewTextInput" Background="#FF292929" Foreground="#FFF1F1F1" IsTabStop="False"/>
+        <ListView x:Name="lstInputs" ItemsSource="{Binding Inputs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="10,184.723,0,10" Background="#FF212121" BorderBrush="#FF727272" Foreground="#FFF3F3F3" HorizontalAlignment="Left" Width="385">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="148" />
-                    <GridViewColumn Header="Nummer" DisplayMemberBinding="{Binding Path=Number}" Width="148" />
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}" Width="175" />
+                    <GridViewColumn Header="Nummer" DisplayMemberBinding="{Binding Path=Number}" Width="170" />
                 </GridView>
             </ListView.View>
             <ListView.ContextMenu>
@@ -43,13 +43,13 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <ListView x:Name="lstOutputs" ItemsSource="{Binding Outputs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="325,184.723,0,10" Background="#FF232323" Foreground="#FFF0F0F0" HorizontalAlignment="Left" Width="307" Focusable="False">
+        <ListView x:Name="lstOutputs" ItemsSource="{Binding Outputs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="405,184.723,0,10" Background="#FF232323" Foreground="#FFF0F0F0" HorizontalAlignment="Left" Width="375" Focusable="False">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Platz" Width="30" DisplayMemberBinding="{Binding Path=Place}"/>
-                    <GridViewColumn Header="Name" Width="91" DisplayMemberBinding="{Binding Path=Name}"/>
-                    <GridViewColumn Header="Nummer" Width="90" DisplayMemberBinding="{Binding Path=Number}"/>
-                    <GridViewColumn Header="Differenz" Width="90" DisplayMemberBinding="{Binding Path=Difference}"/>
+                    <GridViewColumn Header="Platz" Width="32" DisplayMemberBinding="{Binding Path=Place}"/>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="Nummer" Width="100" DisplayMemberBinding="{Binding Path=Number}"/>
+                    <GridViewColumn Header="Differenz" Width="100" DisplayMemberBinding="{Binding Path=Difference}"/>
                 </GridView>
             </ListView.View>
             <ListView.ContextMenu>
@@ -58,7 +58,7 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <Button x:Name="btnInsert" Content="Einfügen" Margin="10,114.713,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="305" Click="BtnInsert_Click" Height="19.96" Foreground="#FFF0F0F0" Background="{x:Null}" TabIndex="3"/>
-        <Button x:Name="btnEvaluate" Content="Auswerten" Margin="325,114.713,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="307" Click="BtnEvaluate_Click" Height="19.96" Background="{x:Null}" Foreground="#FFF0F0F0" IsTabStop="False"/>
+        <Button x:Name="btnInsert" Content="Einfügen" Margin="10,114.713,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="385" Click="BtnInsert_Click" Height="19.96" Foreground="#FFF0F0F0" Background="{x:Null}" TabIndex="3"/>
+        <Button x:Name="btnEvaluate" Content="Auswerten" Margin="405,114.713,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="396" Click="BtnEvaluate_Click" Height="19.96" Background="{x:Null}" Foreground="#FFF0F0F0" IsTabStop="False"/>
     </Grid>
 </Window>
